@@ -35,7 +35,7 @@ const initialForm: MemberForm = {
   email: "",
   password: "",
   modality: "Parapente",
-  level: "Aluno",
+  level: "",
   annuityValidUntil: "",
   bloodType: "",
   emergencyContactName: "",
@@ -158,7 +158,10 @@ export const Formulario = () => {
         <PhotoField>
           <div>
             {form.photoUrl ? (
-              <img src={form.photoUrl} alt={`Foto de ${form.fullName || "usuario"}`} />
+              <img
+                src={form.photoUrl}
+                alt={`Foto de ${form.fullName || "usuario"}`}
+              />
             ) : (
               <span>Foto</span>
             )}
@@ -225,17 +228,12 @@ export const Formulario = () => {
 
           <Field>
             <label htmlFor="level">Nivel</label>
-            <select
+            <input
               id="level"
               value={form.level}
               onChange={(event) => updateField("level", event.target.value)}
-            >
-              {levelOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+              placeholder="Insira o Nível do Piloto"
+            />
           </Field>
 
           <Field>
@@ -272,7 +270,9 @@ export const Formulario = () => {
           </Field>
 
           <Field>
-            <label htmlFor="emergencyContactPhone">Telefone de emergencia</label>
+            <label htmlFor="emergencyContactPhone">
+              Telefone de emergencia
+            </label>
             <input
               id="emergencyContactPhone"
               value={form.emergencyContactPhone}
@@ -287,7 +287,9 @@ export const Formulario = () => {
             <input
               id="healthPlan"
               value={form.healthPlan}
-              onChange={(event) => updateField("healthPlan", event.target.value)}
+              onChange={(event) =>
+                updateField("healthPlan", event.target.value)
+              }
             />
           </Field>
         </FormGrid>
@@ -315,7 +317,11 @@ export const Formulario = () => {
 
       {showDeleteModal && (
         <ModalBackdrop role="presentation">
-          <ModalCard role="dialog" aria-modal="true" aria-labelledby="delete-title">
+          <ModalCard
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-title"
+          >
             <span>Confirmacao</span>
             <h2 id="delete-title">Excluir usuario?</h2>
             <p>
@@ -329,7 +335,11 @@ export const Formulario = () => {
               >
                 Cancelar
               </SecondaryButton>
-              <DangerButton type="button" onClick={handleDelete} disabled={deleting}>
+              <DangerButton
+                type="button"
+                onClick={handleDelete}
+                disabled={deleting}
+              >
                 {deleting ? "Excluindo..." : "Sim, excluir"}
               </DangerButton>
             </ModalActions>

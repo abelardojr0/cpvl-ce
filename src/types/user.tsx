@@ -13,7 +13,7 @@ export interface MemberCard {
   fullName: string;
   email: string;
   modality: "Parapente" | "Asa Delta";
-  level: "Aluno" | "Iniciante" | "Intermediario" | "Avancado" | "Instrutor";
+  level: string;
   annuityValidUntil: string;
   bloodType: string;
   emergencyContactName: string;
