@@ -1,13 +1,20 @@
 import { z } from "zod";
 
 export const modalityOptions = ["Parapente", "Asa Delta"] as const;
+export const levelOptions = [
+  "Aluno",
+  "Iniciante",
+  "Intermediario",
+  "Avancado",
+  "Instrutor",
+] as const;
 
 export const memberSchema = z.object({
   fullName: z.string().min(3, "Informe o nome completo."),
   email: z.string().email("Informe um e-mail valido."),
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres."),
   modality: z.enum(modalityOptions),
-  level: z.string().min(1, "Informe o nivel do piloto."),
+  level: z.enum(levelOptions),
   annuityValidUntil: z.string().min(1, "Informe a validade da anuidade."),
   bloodType: z.string().min(1, "Informe o tipo sanguineo."),
   emergencyContactName: z.string().min(3, "Informe o contato de emergencia."),
