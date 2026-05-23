@@ -3,7 +3,6 @@ import type { FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ZodError } from "zod";
 import {
-  levelOptions,
   memberSchema,
   memberUpdateSchema,
   modalityOptions,
