@@ -4,8 +4,8 @@ import { colors } from "../../utils/theme";
 export const AuthPage = styled.section`
   display: grid;
   place-items: center;
-  min-height: calc(100vh - 164px);
-  padding: 24px 0;
+  min-height: 100vh;
+  padding: 24px;
 `;
 
 export const AuthCard = styled.div`
