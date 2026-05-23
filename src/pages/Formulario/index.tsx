@@ -5,7 +5,6 @@ import { ZodError } from "zod";
 import {
   memberSchema,
   memberUpdateSchema,
-  levelOptions,
   modalityOptions,
 } from "../../schemas/Member";
 import { cloudinaryService } from "../../services/Cloudinary";
@@ -35,7 +34,7 @@ const initialForm: MemberForm = {
   email: "",
   password: "",
   modality: "Parapente",
-  level: "Aluno",
+  level: "",
   annuityValidUntil: "",
   bloodType: "",
   emergencyContactName: "",
@@ -228,17 +227,12 @@ export const Formulario = () => {
 
           <Field>
             <label htmlFor="level">Nivel</label>
-            <select
+            <input
               id="level"
               value={form.level}
               onChange={(event) => updateField("level", event.target.value)}
-            >
-              {levelOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+              placeholder="Insira o nivel do piloto"
+            />
           </Field>
 
           <Field>
