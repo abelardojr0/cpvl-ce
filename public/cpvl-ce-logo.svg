@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 420" role="img" aria-labelledby="title desc">
+  <title id="title">CPVL-CE</title>
+  <desc id="desc">Logo do Clube Pacatuba de Voo Livre</desc>
+  <rect width="520" height="420" fill="#ffffff"/>
+  <circle cx="262" cy="132" r="92" fill="#ffb800"/>
+  <path d="M72 238 226 92h42l66 92 48-62 68 116H72Z" fill="#009b2f"/>
+  <path d="m80 238 148-120 34 48 30-18 54 88Z" fill="#006b2f" opacity=".95"/>
+  <path d="M68 252c128-30 260-34 386-10-124 6-250 18-380 34Z" fill="#0067b1"/>
+  <path d="M78 235c92-28 196-38 332-24" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+  <path d="M68 252c128-30 260-34 386-10" fill="none" stroke="#003a70" stroke-width="9" stroke-linecap="round"/>
+  <path d="M42 96 222 78l62 90-80-40-162-32Z" fill="#ffffff" stroke="#003a70" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M42 96h166l76 72M86 98l50 50M154 88l-18 60M208 78l-4 50" fill="none" stroke="#071827" stroke-width="3" stroke-linecap="round"/>
+  <path d="M148 154c22-31 41-41 62-24l-22 14 8 19-48-9Z" fill="#003a70"/>
+  <path d="M360 80c34-38 84-38 118 0" fill="none" stroke="#003a70" stroke-width="20" stroke-linecap="round"/>
+  <path d="M478 80c-24-28-72-35-118 0" fill="none" stroke="#009b2f" stroke-width="9" stroke-linecap="round"/>
+  <path d="M360 82c20 34 34 64 44 100M388 62c16 42 24 78 24 121M418 57c6 42 6 84 0 126M448 66c-8 42-18 78-30 116" fill="none" stroke="#071827" stroke-width="2"/>
+  <path d="M398 180c16-20 31-18 45 0l-24 13-21-13Z" fill="#003a70"/>
+  <text x="260" y="338" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="72" font-weight="900" fill="#003a70">CPVL-CE</text>
+  <text x="260" y="374" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" font-style="italic" fill="#007a3d">Clube Pacatuba de Voo Livre</text>
+</svg>
