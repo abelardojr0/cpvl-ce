@@ -230,6 +230,20 @@ export const PageShell = styled.section`
   display: grid;
   justify-items: center;
   gap: 24px;
+  min-height: 100vh;
+  width: 100%;
+  padding: clamp(18px, 4vw, 44px) max(14px, calc((100vw - 1180px) / 2)) 56px;
+  box-sizing: border-box;
+  background:
+    linear-gradient(180deg, rgba(255, 184, 0, 0.08) 0%, rgba(255, 184, 0, 0) 260px),
+    linear-gradient(180deg, #f7faf7 0%, #edf6f1 100%);
+  overflow-x: hidden;
+
+  @media (max-width: 680px) {
+    gap: 14px;
+    padding: 16px 14px 34px;
+    overflow-x: hidden;
+  }
 `;
 
 export const PageHeader = styled.header`
@@ -273,6 +287,11 @@ export const PageHeader = styled.header`
   @media (max-width: 680px) {
     align-items: flex-start;
     flex-direction: column;
+    gap: 12px;
+
+    > div:first-child {
+      width: 100%;
+    }
 
     a,
     button {
@@ -289,7 +308,13 @@ export const HeaderActions = styled.div`
 
   @media (max-width: 680px) {
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     justify-content: stretch;
+
+    > :only-child {
+      grid-column: 1 / -1;
+    }
   }
 `;
 
@@ -300,4 +325,11 @@ export const PrintButton = styled.button`
 export const PrintArea = styled.div`
   width: min(980px, 100%);
   min-width: 0;
+
+  @media (max-width: 680px) {
+    display: grid;
+    justify-items: center;
+    width: 100%;
+    overflow-x: hidden;
+  }
 `;

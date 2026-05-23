@@ -15,6 +15,95 @@ export const CardStack = styled.div`
   width: min(940px, 100%);
   display: grid;
   gap: 20px;
+
+  @media (max-width: 640px) {
+    width: 100%;
+    justify-items: center;
+    overflow: visible;
+    padding: 4px 0 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    width: var(--mobile-card-width);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center;
+    margin: 0;
+    padding: 0;
+
+    &[data-face="front"] [data-card="back"],
+    &[data-face="back"] [data-card="front"] {
+      display: none;
+    }
+  }
+
+  @media print {
+    width: 85.6mm !important;
+    display: grid !important;
+    gap: 7mm !important;
+    transform: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+`;
+
+export const MobileCardViewport = styled.div`
+  display: contents;
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    --mobile-card-width: min(700px, 126.9vw);
+
+    display: grid;
+    place-items: center;
+    position: relative;
+    width: 100vw;
+    min-width: 0;
+    min-height: var(--mobile-card-width);
+    margin: 4px calc(50% - 50vw) 14px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 390px) and (orientation: portrait) {
+    --mobile-card-width: 124vw;
+  }
+
+  @media print {
+    display: contents !important;
+  }
+`;
+
+export const MobileFlipButton = styled.button`
+  display: none;
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    width: min(240px, 80vw);
+    min-height: 44px;
+    border: 0;
+    border-radius: 999px;
+    padding: 0 18px;
+    background: ${brand.deepNavy};
+    color: #fff;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1.1;
+    writing-mode: initial;
+    text-transform: uppercase;
+    box-shadow: 0 12px 28px rgba(6, 23, 39, 0.24);
+    transform: none;
+  }
+
+  @media print {
+    display: none !important;
+  }
 `;
 
 const BaseCard = styled.article`
@@ -55,8 +144,15 @@ const BaseCard = styled.article`
   }
 
   @media (max-width: 520px) {
-    aspect-ratio: auto;
+    aspect-ratio: 1.586 / 1;
     min-height: 0;
+  }
+
+  @media (max-width: 640px) {
+    width: min(760px, 100%);
+    max-width: none;
+    min-height: 0;
+    scroll-snap-align: start;
   }
 `;
 
@@ -110,6 +206,24 @@ export const CardBrand = styled.header`
     line-height: 1;
     overflow-wrap: anywhere;
   }
+  @media (max-width: 640px) and (orientation: portrait) {
+    gap: 8px;
+
+    > div:last-child {
+      max-width: 190px;
+      border-radius: 8px;
+      padding: 6px 8px;
+    }
+
+    span {
+      font-size: 7px;
+    }
+
+    strong {
+      margin-top: 3px;
+      font-size: clamp(11px, 3.5vw, 16px);
+    }
+  }
 `;
 
 export const InfoGrid = styled.div`
@@ -124,6 +238,15 @@ export const InfoGrid = styled.div`
 
   @media (max-width: 420px) {
     grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    gap: 5px;
+    margin-top: clamp(8px, 2.4vw, 12px);
   }
 `;
 
@@ -227,20 +350,74 @@ export const CardFace = styled.div`
   @media (max-width: 640px) {
     > section,
     ${BackCard} & {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(112px, 170px) 1fr;
     }
 
     > section {
-      align-items: start;
+      align-items: center;
     }
   }
 
   @media (max-width: 520px) {
-    grid-template-rows: auto auto 1fr;
-    align-content: start;
+    grid-template-rows: auto 1fr;
+    align-content: stretch;
 
     h2 {
-      font-size: clamp(22px, 8vw, 32px);
+      font-size: 32px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    padding: 24px;
+    gap: 18px;
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+
+    ${BackCard} & {
+      grid-template-columns: minmax(0, 1fr) minmax(230px, 0.72fr);
+      grid-template-rows: auto 1fr;
+    }
+  }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    padding: clamp(12px, 3.4vw, 18px);
+    gap: clamp(8px, 2vw, 12px);
+
+    > section {
+      grid-template-columns: minmax(72px, 96px) minmax(0, 1fr);
+      gap: clamp(8px, 2.5vw, 14px);
+    }
+
+    > section > div:last-child {
+      border-radius: 9px;
+      padding: clamp(8px, 2.2vw, 12px);
+    }
+
+    h2 {
+      font-size: clamp(18px, 5.2vw, 28px);
+      line-height: 0.95;
+    }
+
+    h3 {
+      margin: 2px 0 5px;
+      font-size: clamp(10px, 3vw, 14px);
+    }
+
+    p {
+      margin-top: 4px;
+      font-size: clamp(8px, 2.2vw, 11px);
+      line-height: 1.05;
+    }
+
+    ${BackCard} & {
+      grid-template-columns: minmax(0, 1fr) minmax(138px, 0.7fr);
+      grid-template-rows: auto 1fr;
     }
   }
 `;
@@ -260,6 +437,15 @@ export const LogoMark = styled.div`
     width: 100%;
     height: auto;
   }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    width: clamp(78px, 22vw, 112px);
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow:
+      0 8px 16px rgba(0, 0, 0, 0.12),
+      inset 0 0 0 1px rgba(0, 58, 112, 0.08);
+  }
 `;
 
 export const StatusBadge = styled.span`
@@ -277,6 +463,13 @@ export const StatusBadge = styled.span`
 
   &[data-status="inativo"] {
     color: ${colors.error};
+  }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    right: clamp(12px, 3.4vw, 18px);
+    bottom: clamp(10px, 3vw, 16px);
+    padding: 5px 9px;
+    font-size: 8px;
   }
 `;
 
@@ -298,7 +491,16 @@ export const Photo = styled.div`
     0 16px 28px rgba(0, 0, 0, 0.16);
 
   @media (max-width: 640px) {
-    max-width: 132px;
+    max-width: 170px;
+  }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    max-width: 96px;
+    border-radius: 8px;
+    font-size: clamp(24px, 7vw, 36px);
+    box-shadow:
+      inset 0 0 0 5px rgba(255, 255, 255, 0.5),
+      0 10px 18px rgba(0, 0, 0, 0.16);
   }
 
   img {
@@ -315,6 +517,11 @@ export const VerticalLabel = styled.span`
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    margin-bottom: 2px;
+    font-size: 8px;
+  }
 `;
 
 export const DetailPill = styled.div`
@@ -344,6 +551,20 @@ export const DetailPill = styled.div`
     font-weight: 900;
     line-height: 1.05;
     overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    min-height: 38px;
+    padding: 7px 9px;
+
+    span {
+      font-size: 7px;
+    }
+
+    strong {
+      margin-top: 3px;
+      font-size: clamp(9px, 2.6vw, 12px);
+    }
   }
 `;
 
@@ -398,6 +619,16 @@ export const EmergencyPanel = styled.section`
     line-height: 1.05;
     text-transform: uppercase;
   }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    gap: 8px;
+    border-left-width: 3px;
+    padding: 10px;
+
+    > span {
+      font-size: clamp(11px, 3vw, 15px);
+    }
+  }
 `;
 
 export const EmergencyGrid = styled.div`
@@ -415,6 +646,14 @@ export const EmergencyGrid = styled.div`
 
   @media (max-width: 560px) {
     grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    gap: 6px;
   }
 `;
 
@@ -449,14 +688,20 @@ export const EmergencyItem = styled.div`
     overflow-wrap: anywhere;
   }
 
-  @media (max-width: 640px) {
-    align-items: flex-start;
-    flex-direction: column;
+  @media (max-width: 640px) and (orientation: portrait) {
+    min-height: 46px;
+    border-radius: 8px;
+    padding: 7px 8px;
 
-    > div:last-child {
-      width: 100%;
-      max-width: none;
-      text-align: left;
+    span {
+      font-size: 7px;
+      line-height: 1.05;
+    }
+
+    strong {
+      margin-top: 4px;
+      font-size: clamp(10px, 3vw, 14px);
+      line-height: 1;
     }
   }
 `;
@@ -517,7 +762,32 @@ export const Signature = styled.footer`
 
   @media (max-width: 640px) {
     && {
-      grid-column: 1;
+      grid-column: 2 / 3;
+    }
+  }
+
+  @media (max-width: 640px) and (orientation: portrait) {
+    min-width: 0;
+    border-radius: 10px;
+    padding: 10px;
+
+    i {
+      width: min(150px, 100%);
+      margin: 2px 0 8px;
+    }
+
+    img {
+      width: min(150px, 100%);
+      max-height: 42px;
+    }
+
+    && strong {
+      font-size: clamp(8px, 2.2vw, 11px);
+    }
+
+    && span {
+      margin-top: 5px;
+      font-size: clamp(8px, 2vw, 10px);
     }
   }
 `;
