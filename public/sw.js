@@ -1,5 +1,15 @@
-const CACHE_NAME = "cpvl-ce-pwa-v1";
-const APP_SHELL = ["/", "/assinatura", "/cpvl-ce-logo.svg", "/favicon.svg"];
+const CACHE_NAME = "cpvl-ce-pwa-v2";
+const APP_SHELL = [
+  "/",
+  "/assinatura",
+  "/manifest.webmanifest",
+  "/cpvl-ce-logo.svg",
+  "/favicon.svg",
+  "/icons/apple-touch-icon.png",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png",
+  "/icons/maskable-512.png",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

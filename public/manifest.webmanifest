@@ -2,6 +2,7 @@
   "name": "CPVL-CE Carteirinha Digital",
   "short_name": "CPVL-CE",
   "description": "Carteirinha digital e assinatura administrativa do CPVL-CE.",
+  "id": "/assinatura",
   "start_url": "/assinatura",
   "scope": "/",
   "display": "standalone",
@@ -10,16 +11,22 @@
   "theme_color": "#003a70",
   "icons": [
     {
-      "src": "/cpvl-ce-logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
