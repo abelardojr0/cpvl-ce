@@ -26,18 +26,44 @@ export const Header = styled.header`
     font-weight: 900;
   }
 
-  a {
+  a,
+  button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     min-height: 42px;
     border-radius: 8px;
     padding: 0 14px;
+    border: 0;
     background: ${colors.backgroundDark};
     color: #fff;
     font-size: 14px;
     font-weight: 800;
     text-decoration: none;
+    cursor: pointer;
   }
+
+  @media (max-width: 680px) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+`;
+
+export const HeaderActions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+
+  @media (max-width: 680px) {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+`;
+
+export const InstallButton = styled.button`
+  background: ${colors.gradient} !important;
 `;
 
 export const SignatureCard = styled.article`

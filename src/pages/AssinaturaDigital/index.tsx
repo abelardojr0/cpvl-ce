@@ -5,17 +5,31 @@ import { messageError, messageSuccess } from "../../utils/toast";
 import {
   Actions,
   CanvasBox,
+  HeaderActions,
   Header,
+  InstallButton,
   PageShell,
   Preview,
   SignatureCard,
 } from "./style";
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
+}
+
+interface NavigatorWithStandalone extends Navigator {
+  standalone?: boolean;
+}
 
 export const AssinaturaDigital = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const drawingRef = useRef(false);
   const [savedSignature, setSavedSignature] = useState<string | null>(null);
   const [hasStroke, setHasStroke] = useState(false);
+  const [installPrompt, setInstallPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
+  const [isStandalone, setIsStandalone] = useState(false);
 
   const drawSavedSignature = (signatureDataUrl: string) => {
     const canvas = canvasRef.current;
@@ -63,6 +77,32 @@ export const AssinaturaDigital = () => {
         }
       })
       .catch(() => setSavedSignature(null));
+  }, []);
+
+  useEffect(() => {
+    const standalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      Boolean((window.navigator as NavigatorWithStandalone).standalone);
+
+    setIsStandalone(standalone);
+
+    const handleBeforeInstallPrompt = (event: Event) => {
+      event.preventDefault();
+      setInstallPrompt(event as BeforeInstallPromptEvent);
+    };
+
+    const handleAppInstalled = () => {
+      setInstallPrompt(null);
+      setIsStandalone(true);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("appinstalled", handleAppInstalled);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      window.removeEventListener("appinstalled", handleAppInstalled);
+    };
   }, []);
 
   useEffect(() => {
@@ -142,6 +182,17 @@ export const AssinaturaDigital = () => {
     }
   };
 
+  const installApp = async () => {
+    if (!installPrompt) return;
+
+    await installPrompt.prompt();
+    const choice = await installPrompt.userChoice;
+
+    if (choice.outcome === "accepted") {
+      setInstallPrompt(null);
+    }
+  };
+
   return (
     <PageShell>
       <Header>
@@ -149,7 +200,14 @@ export const AssinaturaDigital = () => {
           <span>Area administrativa</span>
           <h1>Assinatura digital</h1>
         </div>
-        <Link to="/">Voltar</Link>
+        <HeaderActions>
+          {installPrompt && !isStandalone && (
+            <InstallButton type="button" onClick={installApp}>
+              Instalar app
+            </InstallButton>
+          )}
+          <Link to="/">Voltar</Link>
+        </HeaderActions>
       </Header>
 
       <SignatureCard>
