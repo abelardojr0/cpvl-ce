@@ -1,7 +1,6 @@
-const CACHE_NAME = "cpvl-ce-pwa-v2";
+const CACHE_NAME = "cpvl-ce-pwa-v3";
 const APP_SHELL = [
   "/",
-  "/assinatura",
   "/manifest.webmanifest",
   "/cpvl-ce-logo.svg",
   "/favicon.svg",
