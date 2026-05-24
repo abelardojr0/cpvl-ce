@@ -3,6 +3,7 @@ import type { FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ZodError } from "zod";
 import {
+  bloodTypeOptions,
   memberSchema,
   memberUpdateSchema,
   modalityOptions,
@@ -10,6 +11,7 @@ import {
 import { cloudinaryService } from "../../services/Cloudinary";
 import { membersService } from "../../services/Members";
 import type { MemberCard } from "../../types/user";
+import { onlyNumbers } from "../../utils/Masks";
 import { messageError, messageSuccess } from "../../utils/toast";
 import {
   Field,
@@ -27,20 +29,43 @@ import {
   DangerButton,
 } from "./style";
 
-type MemberForm = MemberCard & { password: string };
+type MemberForm = MemberCard;
 
 const initialForm: MemberForm = {
   fullName: "",
   email: "",
-  password: "",
+  cpf: "",
   modality: "Parapente",
   level: "",
   annuityValidUntil: "",
   bloodType: "",
   emergencyContactName: "",
   emergencyContactPhone: "",
-  healthPlan: "Nao possui",
+  healthPlan: "",
   photoUrl: "",
+};
+
+const formatCpf = (value: string) => {
+  const numbers = onlyNumbers(value).slice(0, 11);
+
+  return numbers
+    .replace(/^(\d{3})(\d)/, "$1.$2")
+    .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+    .replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+};
+
+const formatPhone = (value: string) => {
+  const numbers = onlyNumbers(value).slice(0, 11);
+
+  if (numbers.length <= 10) {
+    return numbers
+      .replace(/^(\d{2})(\d)/, "($1) $2")
+      .replace(/^(\(\d{2}\) \d{4})(\d)/, "$1-$2");
+  }
+
+  return numbers
+    .replace(/^(\d{2})(\d)/, "($1) $2")
+    .replace(/^(\(\d{2}\) \d{5})(\d)/, "$1-$2");
 };
 
 export const Formulario = () => {
@@ -61,7 +86,7 @@ export const Formulario = () => {
       .then((member) =>
         setForm({
           ...member,
-          password: "",
+          cpf: member.cpf || "",
           photoUrl: member.photoUrl || "",
         }),
       )
@@ -70,6 +95,14 @@ export const Formulario = () => {
 
   const updateField = (field: keyof MemberForm, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
+  };
+
+  const updateCpf = (value: string) => {
+    updateField("cpf", formatCpf(value));
+  };
+
+  const updatePhone = (value: string) => {
+    updateField("emergencyContactPhone", formatPhone(value));
   };
 
   const handlePhotoUpload = async (file?: File) => {
@@ -98,12 +131,17 @@ export const Formulario = () => {
     setSaving(true);
 
     try {
+      const normalizedForm = {
+        ...form,
+        healthPlan: form.healthPlan.trim() || "Nao possui",
+      };
+
       if (isEditing && userId) {
-        const payload = memberUpdateSchema.parse(form);
+        const payload = memberUpdateSchema.parse(normalizedForm);
         await membersService.update(userId, payload);
         messageSuccess("Usuario atualizado", "Carteirinha atualizada.");
       } else {
-        const payload = memberSchema.parse(form);
+        const payload = memberSchema.parse(normalizedForm);
         await membersService.create(payload);
         messageSuccess("Usuario cadastrado", "Carteirinha pronta para acesso.");
       }
@@ -198,15 +236,13 @@ export const Formulario = () => {
           </Field>
 
           <Field>
-            <label htmlFor="password">
-              {isEditing ? "Nova senha" : "Senha inicial"}
-            </label>
+            <label htmlFor="cpf">CPF</label>
             <input
-              id="password"
-              type="password"
-              value={form.password}
-              onChange={(event) => updateField("password", event.target.value)}
-              placeholder={isEditing ? "Deixe em branco para manter" : ""}
+              id="cpf"
+              inputMode="numeric"
+              value={form.cpf}
+              onChange={(event) => updateCpf(event.target.value)}
+              placeholder="000.000.000-00"
             />
           </Field>
 
@@ -249,22 +285,33 @@ export const Formulario = () => {
 
           <Field>
             <label htmlFor="bloodType">Tipo sanguineo</label>
-            <input
+            <select
               id="bloodType"
               value={form.bloodType}
               onChange={(event) => updateField("bloodType", event.target.value)}
-              placeholder="O+"
-            />
+            >
+              <option value="" disabled>
+                Selecione
+              </option>
+              {bloodTypeOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </Field>
 
           <Field>
-            <label htmlFor="emergencyContactName">Contato de emergencia</label>
+            <label htmlFor="emergencyContactName">
+              Nome do contato de emergencia
+            </label>
             <input
               id="emergencyContactName"
               value={form.emergencyContactName}
               onChange={(event) =>
                 updateField("emergencyContactName", event.target.value)
               }
+              placeholder="Nome do contato de emergencia"
             />
           </Field>
 
@@ -275,9 +322,8 @@ export const Formulario = () => {
             <input
               id="emergencyContactPhone"
               value={form.emergencyContactPhone}
-              onChange={(event) =>
-                updateField("emergencyContactPhone", event.target.value)
-              }
+              onChange={(event) => updatePhone(event.target.value)}
+              placeholder="(00) 00000-0000"
             />
           </Field>
 
@@ -289,6 +335,7 @@ export const Formulario = () => {
               onChange={(event) =>
                 updateField("healthPlan", event.target.value)
               }
+              placeholder="Nao possui"
             />
           </Field>
         </FormGrid>

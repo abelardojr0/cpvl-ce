@@ -60,7 +60,7 @@ export const Login = () => {
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              placeholder="Sua senha"
+              placeholder="6 primeiros digitos do CPF"
             />
           </Field>
 

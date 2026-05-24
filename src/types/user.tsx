@@ -1,6 +1,7 @@
 export interface User {
   id?: string | number;
   email: string;
+  cpf?: string;
   name?: string;
   username?: string;
   type?: "admin" | "usuario";
@@ -12,6 +13,7 @@ export interface MemberCard {
   userId?: string | number;
   fullName: string;
   email: string;
+  cpf: string;
   modality: "Parapente" | "Asa Delta";
   level: string;
   annuityValidUntil: string;

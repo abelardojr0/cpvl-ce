@@ -17,12 +17,12 @@ export const membersService = {
     return data;
   },
 
-  create: async (payload: MemberCard & { password: string }) => {
+  create: async (payload: MemberCard) => {
     const { data } = await api.post<MemberCard>("/members", payload);
     return data;
   },
 
-  update: async (userId: string | number, payload: MemberCard & { password?: string }) => {
+  update: async (userId: string | number, payload: MemberCard) => {
     const { data } = await api.put<MemberCard>(`/members/${userId}`, payload);
     return data;
   },

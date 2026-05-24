@@ -16,6 +16,7 @@ import {
 const fallbackCard: MemberCard = {
   fullName: "Usuario Carteirinha",
   email: "usuario@exemplo.com",
+  cpf: "00000000000",
   modality: "Parapente",
   level: "Intermediario",
   annuityValidUntil: "2026-12",
