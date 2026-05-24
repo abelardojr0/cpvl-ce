@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import type { User } from "../types/user";
 import { authService } from "../services/Auth";
-import { messageError, messageSuccess } from "../utils/toast";
+import { messageError } from "../utils/toast";
 
 interface AuthContextProps {
   user: User | null;
@@ -15,7 +15,6 @@ interface AuthContextProps {
     password: string,
     remember: boolean,
   ) => Promise<boolean>;
-  forgot: (email: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -62,26 +61,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const forgot = async (email: string): Promise<boolean> => {
-    setLoading(true);
-
-    try {
-      await authService.forgotPassword(email);
-      messageSuccess("Solicitacao enviada", "Verifique as instrucoes no e-mail.");
-      return true;
-    } catch (error) {
-      const axiosError = error as AxiosError<ApiErrorResponse>;
-      const msg =
-        axiosError.response?.data.message ||
-        axiosError.response?.data.detail ||
-        "Nao foi possivel solicitar a recuperacao.";
-      messageError(msg);
-      return false;
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const logout = () => {
     localStorage.removeItem("authToken");
     sessionStorage.removeItem("authToken");
@@ -114,7 +93,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const value = useMemo(
-    () => ({ user, setUser, signin, loading, forgot, logout }),
+    () => ({ user, setUser, signin, loading, logout }),
     [user, loading],
   );
 

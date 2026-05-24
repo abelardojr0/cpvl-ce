@@ -33,6 +33,9 @@ export const IdentificationCard = ({ data, signature }: IdentificationCardProps)
     /^(\d{2})(\d{5})(\d{4})$/,
     "($1) $2-$3",
   );
+  const emergencyContact = [data.emergencyContactName, emergencyPhone]
+    .filter(Boolean)
+    .join(" - ");
 
   const initials = data.fullName
     .split(" ")
@@ -117,7 +120,7 @@ export const IdentificationCard = ({ data, signature }: IdentificationCardProps)
                 <EmergencyGrid>
                   <EmergencyItem>
                     <span>Telefone de emergencia</span>
-                    <strong>{emergencyPhone}</strong>
+                    <strong>{emergencyContact}</strong>
                   </EmergencyItem>
                   <EmergencyItem>
                     <span>CIOPS</span>

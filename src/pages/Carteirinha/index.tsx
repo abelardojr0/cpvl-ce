@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IdentificationCard } from "../../components/IdentificationCard";
 import { membersService } from "../../services/Members";
 import { settingsService } from "../../services/Settings";
+import { useAuth } from "../../hooks/UseAuth";
 import type { MemberCard, SignatureSettings } from "../../types/user";
 import { messageError } from "../../utils/toast";
 import {
@@ -29,6 +30,7 @@ const fallbackCard: MemberCard = {
 };
 
 export const Carteirinha = () => {
+  const { logout } = useAuth();
   const [card, setCard] = useState<MemberCard>(fallbackCard);
   const [signature, setSignature] = useState<SignatureSettings | null>(null);
 
@@ -53,6 +55,9 @@ export const Carteirinha = () => {
           <PrintButton type="button" onClick={() => window.print()}>
             Imprimir PDF
           </PrintButton>
+          <button type="button" onClick={logout}>
+            Sair
+          </button>
         </HeaderActions>
       </PageHeader>
 

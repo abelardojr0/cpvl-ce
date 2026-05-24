@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { Link } from "react-router-dom";
 import { ZodError } from "zod";
 import { useAuth } from "../../hooks/UseAuth";
 import { loginSchema } from "../../schemas/Auth";
@@ -73,7 +72,6 @@ export const Login = () => {
               />
               Lembrar-me
             </label>
-            <Link to="/esqueceu">Esqueci minha senha</Link>
           </CheckboxRow>
 
           <SubmitButton type="submit" disabled={loading}>
