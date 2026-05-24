@@ -142,7 +142,7 @@ export const IdentificationCard = ({ data, signature }: IdentificationCardProps)
                   />
                 )}
                 <i aria-hidden="true" />
-                <strong>{signature?.presidentName || "José Clenylson Campos Cordeiro"}</strong>
+                <strong>{signature?.presidentName || "Roger Messala Pimentel Cajazeiras"}</strong>
                 <span>{signature?.presidentRole || "Presidente"}</span>
               </Signature>
             </CardFace>

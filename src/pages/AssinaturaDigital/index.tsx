@@ -179,7 +179,7 @@ export const AssinaturaDigital = () => {
         {savedSignature ? (
           <img src={savedSignature} alt="Assinatura cadastrada" />
         ) : (
-          <strong>José Clenylson Campos Cordeiro</strong>
+          <strong>Roger Messala Pimentel Cajazeiras</strong>
         )}
         <p>Presidente</p>
       </Preview>
